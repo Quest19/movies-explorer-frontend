@@ -1,0 +1,126 @@
+.techs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #F5F5F5;
+  padding: 0 70px;
+}
+
+.techs__header {
+  width: 100%;
+  border-bottom: 1px solid black;
+  margin-bottom: 90px;
+}
+
+.techs__title {
+  margin: 100px 0 23px;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 26.63px;
+}
+
+.techs__text {
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 58px;
+  margin: 0;
+}
+
+.techs__mini-text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 26px 0 100px;
+  max-width: 460px;
+  text-align: center;
+  letter-spacing: -0.04em;
+}
+
+.techs__container {
+  display: grid;
+  grid-template-columns: repeat(7, 90px);
+  height: 60px;
+  gap: 10px;
+  margin-bottom: 100px;
+}
+
+.techs__technology-text {
+  background-color: #E8E8E8;
+  margin: 0;
+  padding: 21px 0 0;
+  border-radius: 10px;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .techs {
+    padding: 0 50px;
+  }
+
+  .techs__title {
+    margin-top: 90px;
+  }
+
+  .techs__header {
+    margin-bottom: 80px;
+  }
+
+  .techs__mini-text {
+    font-size: 12px;
+    line-height: 18px;
+    margin: 22px auto 83px;
+  }
+
+  .techs__container {
+    grid-template-columns: repeat(7, 84px);
+    height: 57px;
+    margin-bottom: 90px;
+  }
+
+  .techs__technology-text {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .techs__container {
+    grid-template-columns: repeat(2, 84px);
+    gap: 10px;
+    height: 258px;
+    margin-bottom: 70px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .techs {
+    padding: 0 18px;
+  }
+
+  .techs__title {
+    margin: 70px auto 28px;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.04em;
+  }
+
+  .techs__header {
+    margin-bottom: 60px;
+  }
+
+  .techs__text {
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 36px;
+    letter-spacing: -0.04em;
+    text-align: center;
+  }
+
+  .techs__mini-text {
+    margin: 24px auto 50px;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: -0.04em;
+  }
+}

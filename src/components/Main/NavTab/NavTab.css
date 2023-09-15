@@ -1,0 +1,32 @@
+.navigate {
+  background-color: #F5F5F5;
+  display: flex;
+  justify-content: center;
+}
+
+.navigate__box {
+  display: flex;
+  justify-content: space-between;
+  width: 276px;
+}
+
+.navigate__link {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  text-decoration: underline;
+  margin: 25px 0;
+  color: black;
+}
+
+@media screen and (max-width: 320px) {
+  .navigate__link {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+
+  .navigate__box {
+    width: 214px;
+  }
+}
