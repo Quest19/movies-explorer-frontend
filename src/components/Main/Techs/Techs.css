@@ -101,6 +101,10 @@
     height: 258px;
     margin-bottom: 70px;
   }
+
+  .techs__text {
+    font-size: 36px;
+  }
 }
 
 @media screen and (max-width: 320px) {
