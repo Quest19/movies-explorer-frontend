@@ -20,7 +20,7 @@ function Header() {
         return (
             <>
                 <header
-                    className={`header ${isMainPage && "header__blue-teme"}`}
+                    className={`header ${isMainPage && "header_type_blue"}`}
                 >
                     <Link to="/">
                         <img
@@ -29,7 +29,7 @@ function Header() {
                             alt="Логотип проекта"
                         />
                     </Link>
-                    <div className="header__panel">
+                    <nav className="header__panel">
                         <Link
                             to="/movies"
                             className={`hover header__link ${
@@ -50,11 +50,12 @@ function Header() {
                         >
                             Сохраненные Фильмы
                         </Link>
-                    </div>
-                    <Link to="/profile" className="header__link">
-                        <button className="hover header__button header__button_type_profile">
-                            Аккаунт
-                        </button>
+                    </nav>
+                    <Link
+                        to="/profile"
+                        className="hover header__link header__link_type_account"
+                    >
+                        Аккаунт
                     </Link>
                     <div className="burger">
                         <button
@@ -64,10 +65,21 @@ function Header() {
                                     : "burger__button_type_black"
                             }`}
                             onClick={handleOpenBurgerMenu}
+                            type="button"
                         ></button>
-                        <div className={`burger__container ${isBurgerMenuOpen ? "burger__container_type_visibility" : "burger__container_type_hidden"}`} >
-                            <button className="hover burger__button burger__button_type_close" onClick={handleCloseBurgerMenu}></button>
-                            <div className="burger__navigation">
+                        <div
+                            className={`burger__container ${
+                                isBurgerMenuOpen
+                                    ? "burger__container_type_visibility"
+                                    : "burger__container_type_hidden"
+                            }`}
+                        >
+                            <button
+                                className="hover burger__button burger__button_type_close"
+                                onClick={handleCloseBurgerMenu}
+                                type="button"
+                            ></button>
+                            <nav className="burger__navigation">
                                 <div className="burger__link-container">
                                     <NavLink
                                         to="/"
@@ -106,12 +118,13 @@ function Header() {
                                         Сохранённые фильмы
                                     </NavLink>
                                 </div>
-                                <NavLink to="profile">
-                                    <button className="hover burger__profile-btn header__button_type_profile">
-                                        Аккаунт
-                                    </button>
+                                <NavLink
+                                    to="/profile"
+                                    className="hover burger__link burger__link_type_account"
+                                >
+                                    Аккаунт
                                 </NavLink>
-                            </div>
+                            </nav>
                         </div>
                     </div>
                 </header>
@@ -121,21 +134,31 @@ function Header() {
 
     return (
         <>
-            <header className="header header__blue-teme">
+            <header className="header header_type_blue">
                 <div className="header__container">
-                    <img
-                        className="header__logo"
-                        src={logo}
-                        alt="Логотип проекта"
-                    />
-                    <div className="header__panel">
-                        <Link to="/signup" className="header__link">
+                    <Link to="/">
+                        <img
+                            className="hover header__logo"
+                            src={logo}
+                            alt="Логотип проекта"
+                        />
+                    </Link>
+                    <nav className="header__panel header__panel_type_unauthorized">
+                        <Link
+                            to="/signup"
+                            className="hover header__link header__link_type_white"
+                        >
                             Регистрация
                         </Link>
-                        <Link to="signin">
-                            <button className="header__button">Войти</button>
+                        <Link to="signin" className="hover header__link">
+                            <button
+                                className="header__button header__button_type_unauthorized"
+                                type="button"
+                            >
+                                Войти
+                            </button>
                         </Link>
-                    </div>
+                    </nav>
                 </div>
             </header>
         </>

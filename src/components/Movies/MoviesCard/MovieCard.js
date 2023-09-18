@@ -10,12 +10,12 @@ function MovieCard() {
             <img
                 className="movieCard__img"
                 src={moviePicture}
-                alt="постер к фильму"
+                alt="Обложка к фильму: «Название фильма»"
             />
             <div className="movieCard__container">
                 <div className="movieCard__text-container">
-                    <p className="movieCard__text">33 слова о дизайне</p>
-                    <h2 className="movieCard__time">1ч42м</h2>
+                    <h2 className="movieCard__text">33 слова о дизайне</h2>
+                    <p className="movieCard__time">1ч42м</p>
                 </div>
                 <button
                     className={`hover movieCard__btn ${
@@ -23,6 +23,7 @@ function MovieCard() {
                             ? "movieCard__btn_type_like"
                             : "movieCard__btn_type_delete"
                     }`}
+                    type="button"
                 ></button>
             </div>
         </div>

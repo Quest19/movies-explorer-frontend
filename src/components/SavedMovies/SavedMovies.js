@@ -3,10 +3,12 @@ import MovieCardList from "../Movies/MoviesCardList/MoviesCardList";
 
 function SavedMovies() {
     return (
-        <div className="savedMovies">
-            <SearchForm />
-            <MovieCardList />
-        </div>
+        <main>
+            <div className="savedMovies">
+                <SearchForm />
+                <MovieCardList />
+            </div>
+        </main>
     );
 }
 

@@ -1,36 +1,40 @@
-import arrow from "../../../images/arrow.svg";
-
 function Portfolio() {
     return (
-        <div className="portfolio">
+        <section className="portfolio">
             <h2 className="portfolio__title">Портфолио</h2>
-            <div className="portfoio__container">
-                <div className="portfolio__box">
-                    <h2 className="hover portfolio__text">Статичный сайт</h2>
-                    <img
-                        src={arrow}
-                        alt="Стрелка для перехода на страницу"
-                        className="hover portfolio__img"
-                    ></img>
-                </div>
-                <div className="portfolio__box">
-                    <h2 className="hover portfolio__text">Адаптивный сайт</h2>
-                    <img
-                        src={arrow}
-                        alt="Стрелка для перехода на страницу"
-                        className="hover portfolio__img"
-                    ></img>
-                </div>
-                <div className="portfolio__box">
-                    <h2 className="hover portfolio__text">Одностраничное приложение</h2>
-                    <img
-                        src={arrow}
-                        alt="Стрелка для перехода на страницу"
-                        className="hover portfolio__img"
-                    ></img>
-                </div>
-            </div>
-        </div>
+            <ul className="portfolio__container">
+                <li className="portfolio__box">
+                    <a
+                        href="https://quest19.github.io/how-to-learn/"
+                        className="hover portfolio__text"
+                        target="blank"
+                    >
+                        Статичный сайт
+                    </a>
+                    <div className="hover portfolio__img"></div>
+                </li>
+                <li className="portfolio__box">
+                    <a
+                        href="https://quest19.github.io/russian-travel/"
+                        className="hover portfolio__text"
+                        target="blank"
+                    >
+                        Адаптивный сайт
+                    </a>
+                    <div className="hover portfolio__img"></div>
+                </li>
+                <li className="portfolio__box">
+                    <a
+                        href="https://quest19.github.io/mesto/"
+                        className="hover portfolio__text"
+                        target="blank"
+                    >
+                        Одностраничное приложение
+                    </a>
+                    <div className="hover portfolio__img"></div>
+                </li>
+            </ul>
+        </section>
     );
 }
 

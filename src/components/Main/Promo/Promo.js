@@ -1,12 +1,12 @@
 function Promo() {
     return (
-        <div className="promo">
+        <section className="promo">
             <div className="promo__container">
-                <p className="promo__title">
+                <h1 className="promo__title">
                     Учебный проект студента факультета Веб-разработки.
-                </p>
+                </h1>
             </div>
-        </div>
+        </section>
     );
 }
 

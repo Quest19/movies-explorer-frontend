@@ -1,5 +1,5 @@
 .about {
-  max-width: 1140px;
+  width: calc(100% - 140px);
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -15,6 +15,8 @@
   font-size: 22px;
   font-weight: 400;
   line-height: 26.63px;
+  letter-spacing: -0.04em;
+  text-align: left;
   margin: 0 0 23px;
 }
 
@@ -33,6 +35,8 @@
   font-size: 50px;
   font-weight: 400;
   line-height: 58px;
+  letter-spacing: -0.04em;
+  text-align: left;
   margin: 0 0 18px;
 }
 
@@ -67,7 +71,7 @@
 
 @media screen and (max-width: 768px) {
   .about {
-    max-width: 668px;
+    width: calc(100% - 100px);
   }
 
   .about__header {
@@ -92,7 +96,7 @@
     font-size: 12px;
     font-weight: 400;
     line-height: 18px;
-    margin-bottom: 87px;
+    margin-bottom: 107px;
   }
 
   .about__text-content {
@@ -116,13 +120,19 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 400px) {
   .about {
-    max-width: 292px;
+    width: calc(100% - 28px);
   }
+} 
 
+@media screen and (max-width: 320px) {
   .about__header {
     margin: 70px auto 60px;
+  }
+
+  .about__container {
+    margin-bottom: 70px;
   }
 
   .about__title {
@@ -139,9 +149,20 @@
 
   .about__name {
     margin: 40px auto 20px;
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .about__profession {
+    font-size: 11px;
+    line-height: 16px;
   }
 
   .about__description {
     margin-bottom: 40px;
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    text-align: left;
   }
 }

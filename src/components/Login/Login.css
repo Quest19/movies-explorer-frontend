@@ -66,6 +66,7 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 16.94px;
+  cursor: pointer;
 }
 
 .login__question {
@@ -119,7 +120,7 @@
 
   .login__button {
     width: 260px;
-    margin: 257px auto 14px;
+    margin: 247px auto 14px;
   }
 
   .login__question {

@@ -11,12 +11,14 @@ function Footer() {
                         <a
                             className="hover footer__link"
                             href="https://practicum.yandex.ru/"
+                            target="blank"
                         >
                             Яндекс.Практикум
                         </a>
                         <a
                             className="hover footer__link"
                             href="https://github.com/Quest19"
+                            target="blank"
                         >
                             Github
                         </a>

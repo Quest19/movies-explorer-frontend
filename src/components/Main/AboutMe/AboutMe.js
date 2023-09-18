@@ -2,7 +2,7 @@ import myImage from "../../../images/me.jpg";
 
 function AboutMe() {
     return (
-        <div className="about" id="about">
+        <section className="about" id="about">
             <div className="about__header">
                 <h2 className="about__title">Студент</h2>
             </div>
@@ -22,6 +22,7 @@ function AboutMe() {
                     <a
                         href="https://github.com/Quest19"
                         className="hover about__link"
+                        target="blank"
                     >
                         Github
                     </a>
@@ -30,11 +31,11 @@ function AboutMe() {
                     <img
                         className="about__photo"
                         src={myImage}
-                        alt="моя фотография"
+                        alt="Фотография, на который запечетлен автор, гуляющий по парку."
                     ></img>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 

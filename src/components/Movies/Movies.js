@@ -1,13 +1,15 @@
-import SearchForm from "./SearchForm/SearchForm"
+import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import MoreMovies from "./MoreMovies/MoreMovies";
 
 function Movies() {
-  return <>
-    <SearchForm />
-    <MoviesCardList />
-    <MoreMovies />
-  </>
+    return (
+        <main>
+            <SearchForm />
+            <MoviesCardList />
+            <MoreMovies />
+        </main>
+    );
 }
 
 export default Movies;

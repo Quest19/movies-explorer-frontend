@@ -43,6 +43,11 @@
   text-align: right;
 }
 
+.profile__input:focus {
+    outline: #FF6838;
+    border: 1px solid #FF6838;
+}
+
 .profile__container {
   display: flex;
   flex-direction: column;
@@ -64,6 +69,7 @@
 
 .profile__btn_type_exit {
   color: red;
+  text-decoration: none;
 }
 
 .profile__btn_type_save {
