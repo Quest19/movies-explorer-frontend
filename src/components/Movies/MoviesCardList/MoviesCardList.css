@@ -10,6 +10,11 @@
   grid-template-rows: 218px;
   gap: 32px 20px;
   margin: 0 auto;
+  padding: 0;
+}
+
+.movieCardList__card {
+  list-style-type: none;
 }
 
 @media screen and (max-width: 768px) {
