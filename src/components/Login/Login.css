@@ -1,0 +1,135 @@
+.login {
+  max-width: 396px;
+  display: flex;
+  flex-direction: column;
+  margin: 70px auto 0;
+}
+
+.login__header {
+  margin: 0 0 40px;
+}
+
+.login__title {
+  margin: 40px 0 0;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 29.05px;
+}
+
+.login__text {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 12.1px;
+  margin: 0 0 10px;
+  color: #A0A0A0;
+}
+
+.login__box {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.login__input {
+  border: none;
+  border-radius: 8px;
+  background-color: #F9F9F9;
+  width: 396px;
+  height: 46px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  box-sizing: border-box;
+  padding-left: 15px;
+}
+
+.login__box:not(:last-child) {
+  padding-bottom: 20px;
+}
+
+.login__input:focus {
+  outline: #FF6838;
+  border: 1px solid #FF6838;
+}
+
+
+.login__button {
+  width: 396px;
+  height: 45px;
+  padding: 0;
+  margin: 159px 0 16px;
+  border: none;
+  background-color: #FF6838;
+  border-radius: 3px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.94px;
+  cursor: pointer;
+}
+
+.login__question {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  color: #A0A0A0;
+  margin: 0 auto;
+}
+
+.login__link {
+  color: #FF6838;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+  .login {
+    margin: 232px auto 232px;
+  }
+}
+
+@media screen and (max-width: 410px) {
+  .login {
+    margin: 56px auto 30px;
+  }
+
+  .login__title {
+    margin-top: 50px;
+  }
+
+  .login__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 80px;
+  }
+
+  .login__input {
+    width: 260px;
+  }
+  
+  .login__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .login__button {
+    width: 260px;
+    margin: 247px auto 14px;
+  }
+
+  .login__question {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .login__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

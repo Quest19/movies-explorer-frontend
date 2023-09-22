@@ -1,0 +1,130 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  max-width: 396px;
+  margin: 70px auto 0;
+}
+
+.register__header {
+  margin: 0 0 40px;
+}
+
+.register__title {
+  margin: 40px 0 0;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 29.05px;
+}
+
+.register__text {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 12.1px;
+  margin: 0 0 10px;
+  color: #A0A0A0;
+}
+
+.register__box {
+  border: none;
+  margin: 0;
+  padding: 0 0 20px;
+}
+
+.register__input {
+  border: none;
+  border-radius: 8px;
+  background-color: #F9F9F9;
+  width: 396px;
+  height: 46px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  box-sizing: border-box;
+  padding-left: 15px;
+}
+
+.register__input:focus {
+  outline: #FF6838;
+  border: 1px solid #FF6838;
+}
+
+.register__button {
+  width: 396px;
+  height: 45px;
+  padding: 0;
+  margin: 69px 0 16px;
+  border: none;
+  background-color: #FF6838;
+  border-radius: 3px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.94px;
+  cursor: pointer;
+}
+
+.register__question {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  color: #A0A0A0;
+  margin: 0 auto;
+}
+
+.register__link {
+  color: #FF6838;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+  .register {
+    margin: 232px auto 232px;
+  }
+}
+
+@media screen and (max-width: 410px) {
+  .register {
+    margin: 56px auto 30px;
+  }
+
+  .register__title {
+    margin-top: 50px;
+  }
+
+  .register__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 80px;
+  }
+
+  .register__input {
+    width: 260px;
+  }
+  
+  .register__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .register__button {
+    width: 260px;
+    margin: 157px auto 14px;
+  }
+
+  .register__question {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .register__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

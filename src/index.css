@@ -1,0 +1,28 @@
+@import url("./vendor/normalize.css");
+@import url("./vendor/fonts/fonts.css");
+@import url("./components/App/App.css");
+@import url("./components/Header/Header.css");
+@import url("./components/Main/Promo/Promo.css");
+@import url("./components/Main/NavTab/NavTab.css");
+@import url("./components/Main/AboutProject/AboutProject.css");
+@import url("./components/Main/Techs/Techs.css");
+@import url("./components/Main/AboutMe/AboutMe.css");
+@import url("./components/Main/Prtfolio/Portfolio.css");
+@import url("./components/Movies/SearchForm/SearchForm.css");
+@import url("./components/Movies/ToggleButton/ToggleButton.css");
+@import url("./components/Movies/MoviesCardList/MoviesCardList.css");
+@import url("./components/Movies/MoviesCard/MovieCard.css");
+@import url("./components/Movies/MoreMovies/MoreMovies.css");
+@import url("./components/Footer/Footer.css");
+@import url("./components/Register/Register.css");
+@import url('./components/Login/Login.css');
+@import url("./components/Profile/Profile.css");
+@import url("./components/NotFoundPage/NotFoundPage.css");
+
+.hover {
+  transition: 0.5s linear;
+}
+
+.hover:hover {
+  opacity: 0.4;
+}
