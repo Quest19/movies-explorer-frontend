@@ -44,8 +44,13 @@
 }
 
 .profile__input:focus {
-    outline: #FF6838;
-    border: 1px solid #FF6838;
+  outline: #2BE080;
+  border-bottom: 1px solid #2BE080;
+}
+    
+.profile__input_type_error:focus {
+  outline: red;
+  border-bottom: 1px solid red;
 }
 
 .profile__container {
@@ -75,10 +80,17 @@
 .profile__btn_type_save {
   width: 410px;
   height: 45px;
-  background-color: #FF6838;
   padding-bottom: 0;
   color: white;
   border-radius: 3px;
+}
+
+.profile__btn_type_active {
+  background-color: #FF6838;
+}
+
+.profile__btn_type_disabled {
+  background-color: #A0A0A0;
 }
 
 @media screen and (max-width: 768px) {

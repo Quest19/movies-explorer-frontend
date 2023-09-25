@@ -9,6 +9,8 @@
 .movieCard__img {
   width: 100%;
   height: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   object-fit: cover;
   width: 270px;
   height: 151px;
@@ -29,10 +31,14 @@
 }
 
 .movieCard__text {
+  max-width: 206px;
   font-size: 13px;
   font-weight: 500;
   line-height: 15.73px;
   margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .movieCard__time {
@@ -47,6 +53,7 @@
   width: 28px;
   height: 28px;
   border: none;
+  background-image: url("../../../images/like-btn.svg");
   background-position: center center;
   background-repeat: no-repeat;
   background-color: transparent;

@@ -2,8 +2,7 @@ import React from "react";
 import logo from "../../images/logo.svg";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
-function Header() {
-    const [isLoggedIn, setLoggedIn] = React.useState(true);
+function Header({ isLoggedIn }) {
     const { pathname } = useLocation();
     const isMainPage = pathname === "/";
     const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);
