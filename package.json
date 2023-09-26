@@ -16,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && scp -r ./build/* quest19@51.250.29.158:/home/quest19/frontend-diplom"
   },
   "eslintConfig": {
     "extends": [
