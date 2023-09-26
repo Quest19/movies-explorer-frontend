@@ -10,22 +10,20 @@ function MovieCard({
     savedMovies,
 }) {
   
-    function handleCardClick() {
+    const handleCardClick = () => {
         if (saved) {
-            onCardDelete(savedMovies.filter((m) => m.movieId === card.id)[0]);
+            const savedMovie = savedMovies.find((m) => m.movieId === card.id);
+            onCardDelete(savedMovie);
         } else {
             onCardLike(card);
         }
     }
 
-    function handleDeleteClick() {
+    const handleDeleteClick = () => {
         onCardDelete(card);
     }
 
-    const cardSaveButtonClassName = `${
-        saved ? "movieCard__btn movieCard__btn_type_like" : "movieCard__btn"
-    }`;
-
+    const cardSaveButtonClassName = `movieCard__btn ${saved ? "movieCard__btn_type_like" : ""}`;
 
     return (
         <div className="movieCard">
@@ -54,7 +52,7 @@ function MovieCard({
                 </div>
                 {isSavedMovies ? (
                     <button
-                        className={`hover movieCard__btn movieCard__btn_type_delete`}
+                        className="hover movieCard__btn movieCard__btn_type_delete"
                         type="button"
                         onClick={handleDeleteClick}
                     ></button>

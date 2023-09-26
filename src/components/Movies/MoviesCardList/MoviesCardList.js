@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import MovieCard from "../MoviesCard/MovieCard";
 import Preloader from "../Preloader/Preloader";
@@ -18,58 +18,54 @@ function MoviesCardList({
     const [shownMoviesCount, setShownMoviesCount] = useState(0);
     const { pathname } = useLocation();
 
-    const desktopShowMoreCount = 4;
-    const tabletShowMoreCount = 3;
-    const mobileShowMoreCount = 2;
-    const mobileShowMoreCountMini = 1;
+    const showMoreCounts = {
+        desktop: 4,
+        tablet: 3,
+        mobile: 2,
+    };
 
-    function calculateShownMoviesCount() {
-        const windowWidth = window.innerWidth;
-        if (windowWidth > 1156) {
+    const calculateShownMoviesCount = () => {
+        const width = window.innerWidth;
+        if (width > 1156) {
             setShownMoviesCount(16);
-        } else if (windowWidth > 865) {
+        } else if (width > 866) {
             setShownMoviesCount(12);
-        } else if (windowWidth > 724) {
+        } else if (width > 724) {
             setShownMoviesCount(8);
-        } else if (windowWidth < 400) {
+        } else if (width > 400) {
             setShownMoviesCount(5);
         }
-    }
+    };
 
     useEffect(() => {
         calculateShownMoviesCount();
+        window.addEventListener("resize", calculateShownMoviesCount);
+        return () => {
+            window.removeEventListener("resize", calculateShownMoviesCount);
+        };
     }, []);
 
-    useEffect(() => {
-        setTimeout(() => {
-            window.addEventListener("resize", calculateShownMoviesCount);
-        }, 500);
-    });
+    const handleLoadMore = () => {
+        const width = window.innerWidth;
+        if (width > 1180) {
+            setShownMoviesCount(shownMoviesCount + showMoreCounts.desktop);
+        } else if (width > 1023) {
+            setShownMoviesCount(shownMoviesCount + showMoreCounts.tablet);
+        } else if (width < 1023) {
+            setShownMoviesCount(shownMoviesCount + showMoreCounts.mobile);
+        } 
+    };
 
-    function handleLoadMore() {
-        const windowWidth = window.innerWidth;
-        if (windowWidth > 1180) {
-            setShownMoviesCount(shownMoviesCount + desktopShowMoreCount);
-        } else if (windowWidth > 1023) {
-            setShownMoviesCount(shownMoviesCount + tabletShowMoreCount);
-        } else if (windowWidth < 1023) {
-            setShownMoviesCount(shownMoviesCount + mobileShowMoreCount);
-        } else if (windowWidth > 700) {
-          setShownMoviesCount(shownMoviesCount + mobileShowMoreCountMini);
-        }
-    }
-
-    function getSavedMovie(savedMovies, card) {
-        return savedMovies.find((savedMovie) => savedMovie.movieId === card.id);
-    }
+    const getSavedMovie = (card) =>
+        savedMovies.find((savedMovie) => savedMovie.movieId === card.id);
 
     return (
         <section className="movieCardList">
             {isLoading && <Preloader />}
-            {isNoResults && !isLoading && (
+            {!isLoading && isNoResults && (
                 <SearchMessage errorMessage={"Ничего не найдено!"} />
             )}
-            {isRequestError && !isLoading && (
+            {!isLoading && isRequestError && (
                 <SearchMessage
                     errorMessage={
                         "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
@@ -78,50 +74,29 @@ function MoviesCardList({
             )}
             {!isLoading && !isRequestError && !isNoResults && (
                 <>
-                    {pathname === "/saved-movies" ? (
-                        <>
-                            <ul className="movieCardList__container">
-                                {movieData.map((card) => (
-                                    <MovieCard
-                                        key={isSavedMovies ? card._id : card.id}
-                                        saved={getSavedMovie(savedMovies, card)}
-                                        card={card}
-                                        movieData={movieData}
-                                        isSavedMovies={isSavedMovies}
-                                        onCardLike={onCardLike}
-                                        onCardDelete={onCardDelete}
-                                        savedMovies={savedMovies}
-                                    />
-                                ))}
-                            </ul>
-                        </>
-                    ) : (
-                        <>
-                            <ul className="movieCardList__container">
-                                {movieData
-                                    .slice(0, shownMoviesCount)
-                                    .map((card) => (
-                                        <MovieCard
-                                            key={
-                                                isSavedMovies
-                                                    ? card._id
-                                                    : card.id
-                                            }
-                                            saved={getSavedMovie(
-                                                savedMovies,
-                                                card
-                                            )}
-                                            card={card}
-                                            movieData={movieData}
-                                            isSavedMovies={isSavedMovies}
-                                            onCardLike={onCardLike}
-                                            onCardDelete={onCardDelete}
-                                            savedMovies={savedMovies}
-                                        />
-                                    ))}
-                            </ul>
-                            <MoreMovies onLoadMore={handleLoadMore} />
-                        </>
+                    <ul className="movieCardList__container">
+                        {movieData
+                            .slice(
+                                0,
+                                pathname === "/saved-movies"
+                                    ? undefined
+                                    : shownMoviesCount
+                            )
+                            .map((card) => (
+                                <MovieCard
+                                    key={isSavedMovies ? card._id : card.id}
+                                    saved={getSavedMovie(card)}
+                                    card={card}
+                                    movieData={movieData}
+                                    isSavedMovies={isSavedMovies}
+                                    onCardLike={onCardLike}
+                                    onCardDelete={onCardDelete}
+                                    savedMovies={savedMovies}
+                                />
+                            ))}
+                    </ul>
+                    {pathname !== "/saved-movies" && (
+                        <MoreMovies onLoadMore={handleLoadMore} />
                     )}
                 </>
             )}

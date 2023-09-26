@@ -55,16 +55,14 @@
 }
 
 .searchForm__error {
-  position: absolute;
   bottom: 20px;
-  left: 0;
-  right: 0;
-  text-align: center;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 18px;
-  color: #2be080;
+  font-size: 12px;
+  line-height: 14px;
+  padding-left: 20px;
+  color: #FF6838;
+  text-align: left;
 }
 
 @media screen and (max-width: 768px) {

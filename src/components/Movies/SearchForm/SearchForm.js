@@ -3,68 +3,70 @@ import { useLocation } from "react-router-dom";
 import ToggleButton from "../ToggleButton/ToggleButton";
 
 function SearchForm({ onSearchMovies, onToggleShortMovies, isShortMovies }) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isQueryError, setIsQueryError] = useState(false);
-  const location = useLocation();
+    const [searchRequest, setSearchRequest] = useState("");
+    const [isRequestError, setRequestError] = useState(false);
+    const location = useLocation();
 
-  function handleChangeSearchQuery(e) {
-      setSearchQuery(e.target.value);
-  }
+    useEffect(() => {
+        const localQuery = localStorage.getItem("movieSearchQuery");
+        if (location.pathname === "/movies" && localQuery) {
+            setSearchRequest(localQuery);
+        }
+    }, [location]);
 
-  function handleSubmitSearch(evt) {
-      evt.preventDefault();
-      if (searchQuery.trim().length === 0) {
-          setIsQueryError(true);
-      } else {
-          setIsQueryError(false);
-          onSearchMovies(searchQuery);
-      }
-  }
+    const handleChangeSearchQuery = (evt) => {
+        setSearchRequest(evt.target.value);
+        setRequestError(false);
+    };
 
-  useEffect(() => {
-      if (
-          location.pathname === "/movies" &&
-          localStorage.getItem("movieSearchQuery")
-      ) {
-          const localQuery = localStorage.getItem("movieSearchQuery");
-          setSearchQuery(localQuery);
-      }
-  }, [location]);
+    const handleSubmitSearch = (evt) => {
+        evt.preventDefault();
+        if (searchRequest.trim().length === 0) {
+            setRequestError(true);
+        } else {
+            setRequestError(false);
+            localStorage.setItem("movieSearchQuery", searchRequest);
+            onSearchMovies(searchRequest);
+        }
+    };
 
-  return (
-      <section className="searchForm">
-          <form
-              className="searchForm__form"
-              id="form"
-              onSubmit={handleSubmitSearch}
-          >
-              <div className="searchForm__container">
-                  <input
-                      className="searchForm__input"
-                      type="text"
-                      name="query"
-                      placeholder="Фильм"
-                      required
-                      onChange={handleChangeSearchQuery}
-                      value={searchQuery || ""}
-                  ></input>
-                  <button
-                      className="hover searchForm__button"
-                      type="submit"
-                  ></button>
-              </div>
-              <ToggleButton
-                  onToggle={onToggleShortMovies}
-                  isShortMovies={isShortMovies}
-              />
-              {isQueryError && (
-                  <span className="searchForm__error">
-                      Нужно ввести ключевое слово
-                  </span>
-              )}
-          </form>
-      </section>
-  );
+    return (
+        <section className="searchForm">
+            <form
+                className="searchForm__form"
+                id="form"
+                onSubmit={handleSubmitSearch}
+                noValidate
+            >
+                <div className="searchForm__container">
+                    <input
+                        className="searchForm__input"
+                        type="text"
+                        name="query"
+                        placeholder="Фильм"
+                        required
+                        onChange={handleChangeSearchQuery}
+                        value={searchRequest || ""}
+                    ></input>
+                    <button
+                        className="hover searchForm__button"
+                        type="submit"
+                    ></button>
+                </div>
+                {isRequestError ? (
+                    <span className="searchForm__error">
+                        Нужно ввести ключевое слово
+                    </span>
+                ) : (
+                    ""
+                )}
+                <ToggleButton
+                    onToggle={onToggleShortMovies}
+                    isShortMovies={isShortMovies}
+                />
+            </form>
+        </section>
+    );
 }
 
 export default SearchForm;

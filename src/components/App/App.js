@@ -55,7 +55,7 @@ function App() {
             .then((jwt) => {
                 if (jwt.token) {
                     localStorage.setItem("jwt", jwt.token);
-                    // setLoggedIn(true);
+                    setLoggedIn(true);
                     navigate("/movies", { replace: true });
                 }
             })
@@ -97,6 +97,7 @@ function App() {
         navigate("/");
     }
 
+    //Функция для постановки лайка
     function handleCardLike(card) {
         MainApi.addNewMovie(card)
             .then((newMovie) => {
@@ -107,6 +108,7 @@ function App() {
             });
     }
 
+    //Функция для удаления лайка
     function handleCardDelete(card) {
         MainApi.deleteMovie(card._id)
             .then(() => {

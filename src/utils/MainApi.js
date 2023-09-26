@@ -75,9 +75,11 @@ class mainApi {
                 duration: data.duration,
                 year: data.year,
                 description: data.description,
-                image: 'https://api.nomoreparties.co' + data.image.url,
+                image: "https://api.nomoreparties.co" + data.image.url,
                 trailerLink: data.trailerLink,
-                thumbnail: 'https://api.nomoreparties.co' + data.image.formats.thumbnail.url,
+                thumbnail:
+                    "https://api.nomoreparties.co" +
+                    data.image.formats.thumbnail.url,
                 movieId: data.id,
                 nameRU: data.nameRU,
                 nameEN: data.nameEN,
@@ -97,7 +99,8 @@ class mainApi {
 }
 
 const MainApi = new mainApi({
-    url: "https://api.quest19-diplom.nomoredomainsicu.ru",
+    url: "http://localhost:3000",
+    // url: "https://api.quest19-diplom.nomoredomainsicu.ru",
 });
 
 export default MainApi;

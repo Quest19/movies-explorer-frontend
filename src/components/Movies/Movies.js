@@ -13,27 +13,52 @@ function Movies({ savedMovies, onCardDelete, onCardLike }) {
     const [isRequestErrorMovies, setIsRequestErrorMovies] = useState(false);
     const [isNoResultsMovies, setIsNoResultsMovies] = useState(false);
 
-    function handleFilterMovieData(movies, query, short) {
+    useEffect(() => {
+        const storedMovieData = JSON.parse(localStorage.getItem("movieData"));
+        const shortMoviesEnabled =
+            localStorage.getItem("shortMoviesEnabled") === "true";
+
+        if (storedMovieData) {
+            setInitialMovieData(storedMovieData);
+            setIsShortMovieData(shortMoviesEnabled);
+
+            const filtered = shortMoviesEnabled
+                ? getShortFilmsFilter(storedMovieData)
+                : storedMovieData;
+            setFilteredMovieData(filtered);
+        }
+    }, []);
+
+    useEffect(() => {
+        setIsNoResultsMovies(filteredMovieData.length === 0);
+    }, [filteredMovieData]);
+
+    const handleFilterMovieData = (movies, query, short) => {
         const movieDataList = getFilterMovies(movies, query);
         setInitialMovieData(movieDataList);
-        setFilteredMovieData(short ? getShortFilmsFilter(movieDataList) : movieDataList);
+        setFilteredMovieData(
+            short ? getShortFilmsFilter(movieDataList) : movieDataList
+        );
         localStorage.setItem("movieData", JSON.stringify(movieDataList));
-        localStorage.setItem('allMovies', JSON.stringify(movies));
-    }
+        localStorage.setItem("allMovies", JSON.stringify(movies));
+    };
 
-    function handleToggleShortMovies() {
-      setIsShortMovieData(!isShortMovieData);
-      const filtered = !isShortMovieData ? getShortFilmsFilter(initialMovieData) : initialMovieData;
-      setFilteredMovieData(filtered);
-      localStorage.setItem("shortMoviesEnabled", !isShortMovieData);
-      console.log(filtered);
-  }
+    const handleToggleShortMovies = () => {
+        const newShortMoviesEnabled = !isShortMovieData;
+        setIsShortMovieData(newShortMoviesEnabled);
+        localStorage.setItem("shortMoviesEnabled", newShortMoviesEnabled);
 
+        const filtered = newShortMoviesEnabled
+            ? getShortFilmsFilter(initialMovieData)
+            : initialMovieData;
+        setFilteredMovieData(filtered);
+    };
 
-    function onSearchMovies(query) {
+    const onSearchMovies = (query) => {
         setIsLoadingMovies(true);
         localStorage.setItem("movieSearchQuery", query);
         localStorage.setItem("shortMoviesEnabled", isShortMovieData);
+
         MoviesApi.getMovies()
             .then((movieData) => {
                 handleFilterMovieData(movieData, query, isShortMovieData);
@@ -47,28 +72,7 @@ function Movies({ savedMovies, onCardDelete, onCardLike }) {
             .finally(() => {
                 setIsLoadingMovies(false);
             });
-    }
-
-    useEffect(() => {
-        if (localStorage.getItem("shortMoviesEnabled") === "true") {
-            setIsShortMovieData(true);
-        } else {
-            setIsShortMovieData(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (localStorage.getItem("movieData")) {
-            const movieData = JSON.parse(localStorage.getItem("movieData"));
-            setInitialMovieData(movieData);
-            const filtered = localStorage.getItem("shortMoviesEnabled") === "true" ? getShortFilmsFilter(movieData) : movieData;
-            setFilteredMovieData(filtered);
-        }
-    }, []);
-
-    useEffect(() => {
-        setIsNoResultsMovies(filteredMovieData.length === 0);
-    }, [filteredMovieData]);
+    };
 
     return (
         <main>
