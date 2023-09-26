@@ -99,8 +99,7 @@ class mainApi {
 }
 
 const MainApi = new mainApi({
-    url: "http://localhost:3000",
-    // url: "https://api.quest19-diplom.nomoredomainsicu.ru",
+    url: "https://api.quest19-diplom.nomoredomainsicu.ru",
 });
 
 export default MainApi;
