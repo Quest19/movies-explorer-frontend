@@ -9,7 +9,6 @@ function MovieCard({
     saved,
     savedMovies,
 }) {
-  
     const handleCardClick = () => {
         if (saved) {
             const savedMovie = savedMovies.find((m) => m.movieId === card.id);
@@ -17,13 +16,15 @@ function MovieCard({
         } else {
             onCardLike(card);
         }
-    }
+    };
 
     const handleDeleteClick = () => {
         onCardDelete(card);
-    }
+    };
 
-    const cardSaveButtonClassName = `movieCard__btn ${saved ? "movieCard__btn_type_like" : ""}`;
+    const cardSaveButtonClassName = `movieCard__btn ${
+        saved ? "movieCard__btn_type_like" : ""
+    }`;
 
     return (
         <div className="movieCard">
@@ -45,7 +46,9 @@ function MovieCard({
             </a>
             <div className="movieCard__container">
                 <div className="movieCard__text-container">
-                    <h2 className="movieCard__text" title={card.nameRU} >{card.nameRU}</h2>
+                    <h2 className="movieCard__text" title={card.nameRU}>
+                        {card.nameRU}
+                    </h2>
                     <p className="movieCard__time">
                         {getTimeMovieFilter(card.duration)}
                     </p>

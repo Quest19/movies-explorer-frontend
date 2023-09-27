@@ -3,7 +3,7 @@ import logo from "../../images/logo.svg";
 import { Link, Navigate } from "react-router-dom";
 import { useFormValidator } from "../../hooks/useFormValidator";
 
-function Login({ isLoggedIn, handleLogin, errorMessage }) {
+function Login({ isLoggedIn, isLoading, handleLogin, errorMessage }) {
     const { formValue, errors, handleChange, isFormValid, resetForm } =
         useFormValidator();
 
@@ -17,7 +17,7 @@ function Login({ isLoggedIn, handleLogin, errorMessage }) {
     }, [resetForm]);
 
     if (isLoggedIn) {
-      return <Navigate to="/" replace />
+        return <Navigate to="/" replace />;
     }
 
     return (
@@ -48,10 +48,13 @@ function Login({ isLoggedIn, handleLogin, errorMessage }) {
                             id="email"
                             placeholder="Введите E-mail"
                             onChange={handleChange}
-                            value={formValue.email || ''}
+                            value={formValue.email || ""}
+                            disabled={isLoading}
                             required
                         ></input>
-                        <span className="login__input-err">{errors.email || ''}</span>
+                        <span className="login__input-err">
+                            {errors.email || ""}
+                        </span>
                     </fieldset>
                     <fieldset className="login__box">
                         <legend className="login__text">Пароль</legend>
@@ -63,11 +66,12 @@ function Login({ isLoggedIn, handleLogin, errorMessage }) {
                             placeholder="Введите пароль"
                             minLength={8}
                             onChange={handleChange}
-                            value={formValue.password || ''}
+                            value={formValue.password || ""}
+                            disabled={isLoading}
                             required
                         ></input>
                         <span className="login__input-err">
-                            {errors.password || ''}
+                            {errors.password || ""}
                         </span>
                     </fieldset>
                     {errorMessage && (
@@ -77,14 +81,16 @@ function Login({ isLoggedIn, handleLogin, errorMessage }) {
                     )}
                     <button
                         className={`hover login__button ${
-                            isFormValid
+                            isLoading
+                                ? "login__button_type_loading"
+                                : isFormValid
                                 ? "login__button_type_active"
-                                : "login__button_type_diasbled"
+                                : "login__button_type_disabled"
                         }`}
                         type="submit"
-                        disabled={!isFormValid}
+                        disabled={isLoading || !isFormValid}
                     >
-                        Войти
+                        {isLoading ? "Вход..." : "Войти"}
                     </button>
                 </form>
                 <p className="login__question">

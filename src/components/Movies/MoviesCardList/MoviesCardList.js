@@ -16,6 +16,7 @@ function MoviesCardList({
     savedMovies,
 }) {
     const [shownMoviesCount, setShownMoviesCount] = useState(0);
+    const totalMoviesCount = movieData.length;
     const { pathname } = useLocation();
 
     const showMoreCounts = {
@@ -53,7 +54,7 @@ function MoviesCardList({
             setShownMoviesCount(shownMoviesCount + showMoreCounts.tablet);
         } else if (width < 1023) {
             setShownMoviesCount(shownMoviesCount + showMoreCounts.mobile);
-        } 
+        }
     };
 
     const getSavedMovie = (card) =>
@@ -95,9 +96,10 @@ function MoviesCardList({
                                 />
                             ))}
                     </ul>
-                    {pathname !== "/saved-movies" && (
-                        <MoreMovies onLoadMore={handleLoadMore} />
-                    )}
+                    {pathname !== "/saved-movies" &&
+                        shownMoviesCount < totalMoviesCount && (
+                            <MoreMovies onLoadMore={handleLoadMore} />
+                        )}
                 </>
             )}
         </section>

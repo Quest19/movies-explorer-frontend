@@ -3,7 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import { useFormValidator } from "../../hooks/useFormValidator";
 
-function Register({ isLoggedIn, handleRegister, errorMessage }) {
+function Register({ isLoggedIn, isLoading, handleRegister, errorMessage }) {
     const { formValue, errors, handleChange, isFormValid, resetForm } =
         useFormValidator();
 
@@ -17,7 +17,7 @@ function Register({ isLoggedIn, handleRegister, errorMessage }) {
     }, [resetForm]);
 
     if (isLoggedIn) {
-      return <Navigate to="/" replace />
+        return <Navigate to="/" replace />;
     }
 
     return (
@@ -51,6 +51,7 @@ function Register({ isLoggedIn, handleRegister, errorMessage }) {
                             maxLength={30}
                             onChange={handleChange}
                             value={formValue.name || ""}
+                            disabled={isLoading}
                             required
                         ></input>
                         <span className="register__input-err">
@@ -67,6 +68,7 @@ function Register({ isLoggedIn, handleRegister, errorMessage }) {
                             type="email"
                             onChange={handleChange}
                             value={formValue.email || ""}
+                            disabled={isLoading}
                             required
                         ></input>
                         <span className="register__input-err">
@@ -84,6 +86,7 @@ function Register({ isLoggedIn, handleRegister, errorMessage }) {
                             minLength="8"
                             onChange={handleChange}
                             value={formValue.password || ""}
+                            disabled={isLoading}
                             required
                         ></input>
                         <span className="register__input-err">
@@ -102,9 +105,9 @@ function Register({ isLoggedIn, handleRegister, errorMessage }) {
                                 : "register__button_type_diasbled"
                         }`}
                         type="submit"
-                        disabled={!isFormValid}
+                        disabled={!isFormValid || isLoading}
                     >
-                        Зарегистрироваться
+                        {isLoading ? "Загрузка..." : "Зарегистрироваться"}
                     </button>
                 </form>
                 <p className="register__question">

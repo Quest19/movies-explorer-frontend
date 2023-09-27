@@ -93,6 +93,19 @@
   background-color: #A0A0A0;
 }
 
+.profile__message {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 12.1px;
+  color: green;
+  margin: 0;
+  height: 20px;
+}
+
+.profile__message_type_err {
+  color: red;
+}
+
 @media screen and (max-width: 768px) {
   .profile {
     margin-top: 236px;

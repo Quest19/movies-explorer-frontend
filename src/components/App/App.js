@@ -18,10 +18,13 @@ function App() {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
     const [savedMovies, setSavedMovies] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
     const navigate = useNavigate();
 
-    //Функция для регистрации пользователся
+    //Функция для регистрации пользователя
     function handleRegister({ name, email, password }) {
+        setIsLoading(true);
         MainApi.register(name, email, password)
             .then((data) => {
                 if (data._id) {
@@ -31,6 +34,9 @@ function App() {
             .catch((err) => {
                 console.log(err);
                 setErrorMessage(true);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }
 
@@ -51,6 +57,7 @@ function App() {
 
     //Функция для авторизации пользователя
     function handleLogin({ email, password }) {
+        setIsLoading(true);
         MainApi.login(email, password)
             .then((jwt) => {
                 if (jwt.token) {
@@ -62,6 +69,9 @@ function App() {
             .catch((err) => {
                 console.log(err);
                 setErrorMessage(true);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }
 
@@ -80,12 +90,17 @@ function App() {
 
     //Функция для редактирования профиля
     function handleProfile({ name, email }) {
+        setIsLoading(true);
         MainApi.updateUser(name, email)
             .then((newUserData) => {
                 setCurrentUser(newUserData);
             })
             .catch((err) => {
                 console.log(err);
+                setErrorMessage(true);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }
 
@@ -174,8 +189,10 @@ function App() {
                                 <ProtectedRoute
                                     element={Profile}
                                     isLoggedIn={isLoggedIn}
+                                    isLoading={isLoading}
                                     signOut={signOut}
                                     handleProfile={handleProfile}
+                                    errorMessage={errorMessage}
                                 />
                             </>
                         }
@@ -185,6 +202,7 @@ function App() {
                         element={
                             <Regiter
                                 isLoggedIn={isLoggedIn}
+                                isLoading={isLoading}
                                 handleRegister={handleRegister}
                                 errorMessage={errorMessage}
                             />
@@ -195,6 +213,7 @@ function App() {
                         element={
                             <Login
                                 isLoggedIn={isLoggedIn}
+                                isLoading={isLoading}
                                 handleLogin={handleLogin}
                                 errorMessage={errorMessage}
                             />

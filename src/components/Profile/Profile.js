@@ -2,9 +2,10 @@ import React, { useState, useContext, useEffect } from "react";
 import { useFormValidator } from "../../hooks/useFormValidator";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 
-function Profile({ signOut, handleProfile }) {
+function Profile({ isLoading, signOut, handleProfile, errorMessage }) {
     const [isCorrect, setIsCorrect] = useState(false);
     const [isSameUser, setIsSameUser] = useState(true);
+    const [isSaved, setIsSaved] = useState(false);
     const { formValue, errors, handleChange, isFormValid, resetForm } =
         useFormValidator();
     const currentUser = useContext(CurrentUserContext);
@@ -13,6 +14,7 @@ function Profile({ signOut, handleProfile }) {
         evt.preventDefault();
         handleProfile(formValue);
         setIsCorrect(false);
+        setIsSaved(true);
     }
 
     useEffect(() => {
@@ -31,7 +33,6 @@ function Profile({ signOut, handleProfile }) {
     const handleEdit = () => {
         setIsCorrect(true);
     };
-
 
     return (
         <main>
@@ -58,7 +59,7 @@ function Profile({ signOut, handleProfile }) {
                             maxLength={30}
                             value={formValue.name || ""}
                             onChange={handleChange}
-                            disabled={!isCorrect}
+                            disabled={!isCorrect || isLoading}
                             required
                         ></input>
                     </fieldset>
@@ -73,7 +74,7 @@ function Profile({ signOut, handleProfile }) {
                             name="email"
                             value={formValue.email || ""}
                             onChange={handleChange}
-                            disabled={!isCorrect}
+                            disabled={!isCorrect || isLoading}
                             required
                         ></input>
                     </fieldset>
@@ -81,6 +82,16 @@ function Profile({ signOut, handleProfile }) {
                 <div className="profile__container">
                     {!isCorrect ? (
                         <>
+                            {isSaved && !errorMessage && (
+                                <span className="profile__message">
+                                    Данные успешно сохранены
+                                </span>
+                            )}
+                            {errorMessage && (
+                                <span className="profile__message profile__message_type_err">
+                                    При обновлени данных произошла ошибка!
+                                </span>
+                            )}
                             <button
                                 className="hover profile__btn profile__btn_type_edit"
                                 onClick={handleEdit}
@@ -96,18 +107,22 @@ function Profile({ signOut, handleProfile }) {
                             </button>
                         </>
                     ) : (
-                        <button
-                            className={`hover profile__btn profile__btn_type_save ${
-                                (!isFormValid || isSameUser)
-                                    ? "profile__btn_type_disabled"
-                                    : "profile__btn_type_active"
-                            }`}
-                            onClick={handleSubmit}
-                            disabled={!isFormValid || isSameUser}
-                            type="submit"
-                        >
-                            Сохранить
-                        </button>
+                        <>
+                            <button
+                                className={`hover profile__btn profile__btn_type_save ${
+                                    isLoading || !isFormValid || isSameUser
+                                        ? "profile__btn_type_disabled"
+                                        : "profile__btn_type_active"
+                                }`}
+                                onClick={handleSubmit}
+                                disabled={
+                                    isLoading || !isFormValid || isSameUser
+                                }
+                                type="submit"
+                            >
+                                {isLoading ? "Сохранение..." : "Сохранить"}
+                            </button>
+                        </>
                     )}
                 </div>
             </section>

@@ -25,7 +25,6 @@ function SearchForm({ onSearchMovies, onToggleShortMovies, isShortMovies }) {
             setRequestError(true);
         } else {
             setRequestError(false);
-            localStorage.setItem("movieSearchQuery", searchRequest);
             onSearchMovies(searchRequest);
         }
     };
