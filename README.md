@@ -12,4 +12,4 @@ Frontend - https://quest19-diplom.nomoredomainsicu.ru/
 
 Backend https://api.quest19-diplom.nomoredomainsicu.ru/
  
-Ссылка на pull request: https://github.com/Quest19/movies-explorer-frontend/pulls
+Ссылка на pull request: https://github.com/Quest19/movies-explorer-frontend/pull/2
