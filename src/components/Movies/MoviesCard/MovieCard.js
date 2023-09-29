@@ -1,30 +1,70 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-import moviePicture from "../../../images/movie_pic.png";
+import getTimeMovieFilter from "../../../utils/movieFilters/getTimeMovieFilter";
+import { IMAGE_URL_PREFIX } from "../../../utils/constants/constants";
 
-function MovieCard() {
-    const { pathname } = useLocation();
-    const isMoviesPage = pathname === "/movies";
+function MovieCard({
+    card,
+    isSavedMovies,
+    onCardDelete,
+    onCardLike,
+    saved,
+    savedMovies,
+}) {
+    const handleCardClick = () => {
+        if (saved) {
+            const savedMovie = savedMovies.find((m) => m.movieId === card.id);
+            onCardDelete(savedMovie);
+        } else {
+            onCardLike(card);
+        }
+    };
+
+    const handleDeleteClick = () => {
+        onCardDelete(card);
+    };
+
     return (
         <div className="movieCard">
-            <img
-                className="movieCard__img"
-                src={moviePicture}
-                alt="Обложка к фильму: «Название фильма»"
-            />
+            <a
+                href={card.trailerLink}
+                className="movieCard__trailer"
+                target="_blank"
+                rel="noreferrer"
+            >
+                <img
+                    className="movieCard__img"
+                    src={
+                        isSavedMovies
+                            ? card.image
+                            : `${IMAGE_URL_PREFIX}${card.image.url}`
+                    }
+                    alt={card.nameRU}
+                />
+            </a>
             <div className="movieCard__container">
                 <div className="movieCard__text-container">
-                    <h2 className="movieCard__text">33 слова о дизайне</h2>
-                    <p className="movieCard__time">1ч42м</p>
+                    <h2 className="movieCard__text" title={card.nameRU}>
+                        {card.nameRU}
+                    </h2>
+                    <p className="movieCard__time">
+                        {getTimeMovieFilter(card.duration)}
+                    </p>
                 </div>
-                <button
-                    className={`hover movieCard__btn ${
-                        isMoviesPage
-                            ? "movieCard__btn_type_like"
-                            : "movieCard__btn_type_delete"
-                    }`}
-                    type="button"
-                ></button>
+                {isSavedMovies ? (
+                    <button
+                        className="hover movieCard__btn movieCard__btn_type_delete"
+                        type="button"
+                        onClick={handleDeleteClick}
+                    ></button>
+                ) : (
+                    <button
+                        className={`movieCard__btn ${
+                            saved ? "movieCard__btn_type_like" : ""
+                        }`}
+                        type="button"
+                        onClick={handleCardClick}
+                    ></button>
+                )}
             </div>
         </div>
     );

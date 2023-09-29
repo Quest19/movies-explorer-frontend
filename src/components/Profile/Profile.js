@@ -1,56 +1,116 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect, useRef } from "react";
+import { useFormValidator } from "../../hooks/useFormValidator";
+import { CurrentUserContext } from "../../context/CurrentUserContext";
 
-function Profile() {
-    const [name, setName] = React.useState("Ренат");
-    const [email, setEmail] = React.useState("huzin-2014@mail.ru");
-    const [isEdit, setIsEdit] = React.useState(false);
+function Profile({
+    isLoading,
+    signOut,
+    handleProfile,
+    errorMessage,
+    resetError,
+}) {
+    const [isCorrect, setIsCorrect] = useState(false);
+    const [isSameUser, setIsSameUser] = useState(true);
+    const [isSaved, setIsSaved] = useState(false);
+    const { formValue, errors, handleChange, isFormValid, resetForm } =
+        useFormValidator();
+    const currentUser = useContext(CurrentUserContext);
+    const resetErrorRef = useRef(resetError);
+
+    useEffect(() => {
+        const clearError = () => {
+            resetErrorRef.current();
+        };
+        clearError();
+        return clearError;
+    }, []);
+
+    function handleSubmit(evt) {
+        evt.preventDefault();
+        handleProfile(formValue);
+        setIsCorrect(false);
+        setIsSaved(true);
+    }
+
+    useEffect(() => {
+        if (currentUser) {
+            resetForm(currentUser, {}, true);
+        }
+    }, [currentUser, resetForm]);
+
+    useEffect(() => {
+        setIsCorrect(false);
+    }, []);
+
+    useEffect(() => {
+        setIsSameUser(
+            currentUser.name === formValue.name &&
+                currentUser.email === formValue.email
+        );
+    }, [formValue, currentUser]);
 
     const handleEdit = () => {
-        setIsEdit(true);
-    };
-
-    const handleSave = () => {
-        setIsEdit(false);
+        setIsCorrect(true);
     };
 
     return (
         <main>
             <section className="profile">
-                <h2 className="profile__greetings">Привет, Ренат!</h2>
-                <form className="profile__form">
+                <h2 className="profile__greetings">{`Привет, ${
+                    currentUser.name || ""
+                }!`}</h2>
+                <form
+                    className="profile__form"
+                    id="form"
+                    onSubmit={handleSubmit}
+                    noValidate
+                >
                     <fieldset className="profile__box">
                         <span className="profile__text">Имя</span>
                         <input
-                            className="profile__input"
+                            className={`profile__input ${
+                                errors.name && "profile__input_type_error"
+                            }`}
                             type="text"
-                            placeholder="Имя"
                             id="name"
                             name="name"
-                            value={name}
                             minLength={2}
                             maxLength={30}
-                            disabled={!isEdit}
-                            onChange={(evt) => setName(evt.target.value)}
+                            value={formValue.name || ""}
+                            onChange={handleChange}
+                            disabled={!isCorrect || isLoading}
+                            required
                         ></input>
                     </fieldset>
                     <fieldset className="profile__box">
                         <span className="profile__text">E-mail</span>
                         <input
-                            className="profile__input"
+                            className={`profile__input ${
+                                errors.email && "profile__input_type_error"
+                            }`}
                             type="email"
-                            placeholder="E-mail"
                             id="email"
                             name="email"
-                            value={email}
-                            disabled={!isEdit}
-                            onChange={(evt) => setEmail(evt.target.value)}
+                            value={formValue.email || ""}
+                            onChange={handleChange}
+                            disabled={!isCorrect || isLoading}
+                            required
                         ></input>
                     </fieldset>
                 </form>
                 <div className="profile__container">
-                    {!isEdit ? (
+                    {!isCorrect ? (
                         <>
+                            {isSaved && !errorMessage && (
+                                <span className="profile__message">
+                                    Данные успешно сохранены
+                                </span>
+                            )}
+                            {errorMessage && (
+                                <span className="profile__message profile__message_type_err">
+                                    {errorMessage}
+                                </span>
+                            )}
                             <button
                                 className="hover profile__btn profile__btn_type_edit"
                                 onClick={handleEdit}
@@ -58,21 +118,36 @@ function Profile() {
                             >
                                 Редактировать
                             </button>
-                            <Link
-                                to="/"
+                            <button
                                 className="hover profile__btn profile__btn_type_exit"
+                                onClick={signOut}
                             >
                                 Выйти из аккаунта
-                            </Link>
+                            </button>
                         </>
                     ) : (
-                        <button
-                            className="hover profile__btn profile__btn_type_save"
-                            onClick={handleSave}
-                            type="submit"
-                        >
-                            Сохранить
-                        </button>
+                        <>
+                            <button
+                                className={`hover profile__btn profile__btn_type_save ${
+                                    isLoading ||
+                                    !isFormValid ||
+                                    isSameUser ||
+                                    errors.email
+                                        ? "profile__btn_type_disabled"
+                                        : "profile__btn_type_active"
+                                }`}
+                                onClick={handleSubmit}
+                                disabled={
+                                    isLoading ||
+                                    !isFormValid ||
+                                    isSameUser ||
+                                    errors.email
+                                }
+                                type="submit"
+                            >
+                                {isLoading ? "Сохранение..." : "Сохранить"}
+                            </button>
+                        </>
                     )}
                 </div>
             </section>
