@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import validator from "validator";
+import { EMAIL_ERROR } from "../utils/constants/constants";
 
 export function useFormValidator() {
     const [formValue, setFormValue] = useState({});
@@ -27,9 +28,7 @@ export function useFormValidator() {
             if (!isEmail) {
                 setErrors({
                     ...errors,
-                    [name]:
-                        event.target.validationMessage ||
-                        "Введите ваш полный email адрес",
+                    [name]: event.target.validationMessage || EMAIL_ERROR,
                 });
                 setIsFormValid(isEmail);
             }

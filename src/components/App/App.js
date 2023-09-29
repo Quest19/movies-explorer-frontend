@@ -12,11 +12,12 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import MainApi from "../../utils/MainApi";
+import { JWT, ERROR_MESSAGES } from "../../utils/constants/constants";
 
 function App() {
     const [currenUser, setCurrentUser] = useState({});
     const [isLoggedIn, setLoggedIn] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const [savedMovies, setSavedMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -25,6 +26,7 @@ function App() {
     //Функция для регистрации пользователя
     function handleRegister({ name, email, password }) {
         setIsLoading(true);
+        handleResetErrorMessages();
         MainApi.register(name, email, password)
             .then((data) => {
                 if (data._id) {
@@ -32,8 +34,8 @@ function App() {
                 }
             })
             .catch((err) => {
+                setErrorMessage(ERROR_MESSAGES.registrError);
                 console.log(err);
-                setErrorMessage(true);
             })
             .finally(() => {
                 setIsLoading(false);
@@ -42,7 +44,7 @@ function App() {
 
     //Проверка токена и авторизация пользователя
     useEffect(() => {
-        const token = localStorage.getItem("jwt");
+        const token = localStorage.getItem(JWT);
         if (token) {
             MainApi.getUserInfo()
                 .then((data) => {
@@ -58,17 +60,18 @@ function App() {
     //Функция для авторизации пользователя
     function handleLogin({ email, password }) {
         setIsLoading(true);
+        handleResetErrorMessages();
         MainApi.login(email, password)
             .then((jwt) => {
                 if (jwt.token) {
-                    localStorage.setItem("jwt", jwt.token);
+                    localStorage.setItem(JWT, jwt.token);
                     setLoggedIn(true);
                     navigate("/movies", { replace: true });
                 }
             })
             .catch((err) => {
+                setErrorMessage(ERROR_MESSAGES.loginError);
                 console.log(err);
-                setErrorMessage(true);
             })
             .finally(() => {
                 setIsLoading(false);
@@ -91,13 +94,15 @@ function App() {
     //Функция для редактирования профиля
     function handleProfile({ name, email }) {
         setIsLoading(true);
+        handleResetErrorMessages();
         MainApi.updateUser(name, email)
             .then((newUserData) => {
                 setCurrentUser(newUserData);
+                setErrorMessage(false);
             })
             .catch((err) => {
+                setErrorMessage(ERROR_MESSAGES.updateProfileError);
                 console.log(err);
-                setErrorMessage(true);
             })
             .finally(() => {
                 setIsLoading(false);
@@ -109,6 +114,7 @@ function App() {
         setLoggedIn(false);
         setCurrentUser({});
         localStorage.clear();
+        setErrorMessage("");
         navigate("/");
     }
 
@@ -134,6 +140,10 @@ function App() {
             .catch((err) => {
                 console.log(err);
             });
+    }
+
+    function handleResetErrorMessages() {
+        setErrorMessage("");
     }
 
     return (
@@ -193,6 +203,7 @@ function App() {
                                     signOut={signOut}
                                     handleProfile={handleProfile}
                                     errorMessage={errorMessage}
+                                    resetError={handleResetErrorMessages}
                                 />
                             </>
                         }
@@ -205,6 +216,7 @@ function App() {
                                 isLoading={isLoading}
                                 handleRegister={handleRegister}
                                 errorMessage={errorMessage}
+                                resetError={handleResetErrorMessages}
                             />
                         }
                     />
@@ -216,6 +228,7 @@ function App() {
                                 isLoading={isLoading}
                                 handleLogin={handleLogin}
                                 errorMessage={errorMessage}
+                                resetError={handleResetErrorMessages}
                             />
                         }
                     />

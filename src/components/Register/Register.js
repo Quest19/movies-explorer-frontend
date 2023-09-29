@@ -1,14 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link, Navigate } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import { useFormValidator } from "../../hooks/useFormValidator";
 
-function Register({ isLoggedIn, isLoading, handleRegister, errorMessage }) {
+function Register({
+    isLoggedIn,
+    isLoading,
+    handleRegister,
+    errorMessage,
+    resetError,
+}) {
     const { formValue, errors, handleChange, isFormValid, resetForm } =
         useFormValidator();
+    const resetErrorRef = useRef(resetError);
+
+    useEffect(() => {
+        const clearError = () => {
+            resetErrorRef.current();
+        };
+        clearError();
+        return clearError;
+    }, []);
 
     function handleSubmit(evt) {
         evt.preventDefault();
+
         handleRegister(formValue);
     }
 
@@ -93,19 +109,19 @@ function Register({ isLoggedIn, isLoading, handleRegister, errorMessage }) {
                             {errors.password || ""}
                         </span>
                     </fieldset>
-                    {errorMessage && (
+                    {!!errorMessage && (
                         <span className="register__button-err">
-                            Что-то пошло не так
+                            {errorMessage}
                         </span>
                     )}
                     <button
                         className={`hover register__button ${
-                            isFormValid
-                                ? "register__button_type_active"
-                                : "register__button_type_diasbled"
+                            !isFormValid || errors.email
+                                ? "register__button_type_disabled"
+                                : "register__button_type_active"
                         }`}
                         type="submit"
-                        disabled={!isFormValid || isLoading}
+                        disabled={!isFormValid || isLoading || errors.email}
                     >
                         {isLoading ? "Загрузка..." : "Зарегистрироваться"}
                     </button>

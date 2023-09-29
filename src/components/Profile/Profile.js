@@ -1,14 +1,29 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { useFormValidator } from "../../hooks/useFormValidator";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 
-function Profile({ isLoading, signOut, handleProfile, errorMessage }) {
+function Profile({
+    isLoading,
+    signOut,
+    handleProfile,
+    errorMessage,
+    resetError,
+}) {
     const [isCorrect, setIsCorrect] = useState(false);
     const [isSameUser, setIsSameUser] = useState(true);
     const [isSaved, setIsSaved] = useState(false);
     const { formValue, errors, handleChange, isFormValid, resetForm } =
         useFormValidator();
     const currentUser = useContext(CurrentUserContext);
+    const resetErrorRef = useRef(resetError);
+
+    useEffect(() => {
+        const clearError = () => {
+            resetErrorRef.current();
+        };
+        clearError();
+        return clearError;
+    }, []);
 
     function handleSubmit(evt) {
         evt.preventDefault();
@@ -22,6 +37,10 @@ function Profile({ isLoading, signOut, handleProfile, errorMessage }) {
             resetForm(currentUser, {}, true);
         }
     }, [currentUser, resetForm]);
+
+    useEffect(() => {
+        setIsCorrect(false);
+    }, []);
 
     useEffect(() => {
         setIsSameUser(
@@ -89,7 +108,7 @@ function Profile({ isLoading, signOut, handleProfile, errorMessage }) {
                             )}
                             {errorMessage && (
                                 <span className="profile__message profile__message_type_err">
-                                    При обновлени данных произошла ошибка!
+                                    {errorMessage}
                                 </span>
                             )}
                             <button
@@ -110,13 +129,19 @@ function Profile({ isLoading, signOut, handleProfile, errorMessage }) {
                         <>
                             <button
                                 className={`hover profile__btn profile__btn_type_save ${
-                                    isLoading || !isFormValid || isSameUser
+                                    isLoading ||
+                                    !isFormValid ||
+                                    isSameUser ||
+                                    errors.email
                                         ? "profile__btn_type_disabled"
                                         : "profile__btn_type_active"
                                 }`}
                                 onClick={handleSubmit}
                                 disabled={
-                                    isLoading || !isFormValid || isSameUser
+                                    isLoading ||
+                                    !isFormValid ||
+                                    isSameUser ||
+                                    errors.email
                                 }
                                 type="submit"
                             >

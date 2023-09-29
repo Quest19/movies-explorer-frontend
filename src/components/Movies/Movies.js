@@ -4,6 +4,7 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import MoviesApi from "../../utils/MoviesApi";
 import getFilterMovies from "../../utils/movieFilters/getFilterMovies";
 import getShortFilmsFilter from "../../utils/movieFilters/getShortFilmsFilter";
+import { LOCAL_STORAGE_KEYS } from "../../utils/constants/constants";
 
 function Movies({ savedMovies, onCardDelete, onCardLike }) {
     const [isLoadingMovies, setIsLoadingMovies] = useState(false);
@@ -14,9 +15,12 @@ function Movies({ savedMovies, onCardDelete, onCardLike }) {
     const [isNoResultsMovies, setIsNoResultsMovies] = useState(false);
 
     useEffect(() => {
-        const storedMovieData = JSON.parse(localStorage.getItem("movieData"));
+        const storedMovieData = JSON.parse(
+            localStorage.getItem(LOCAL_STORAGE_KEYS.movieData)
+        );
         const shortMoviesEnabled =
-            localStorage.getItem("shortMoviesEnabled") === "true";
+            localStorage.getItem(LOCAL_STORAGE_KEYS.shortMoviesEnabled) ===
+            "true";
 
         if (storedMovieData) {
             setInitialMovieData(storedMovieData);
@@ -39,14 +43,23 @@ function Movies({ savedMovies, onCardDelete, onCardLike }) {
         setFilteredMovieData(
             short ? getShortFilmsFilter(movieDataList) : movieDataList
         );
-        localStorage.setItem("movieData", JSON.stringify(movieDataList));
-        localStorage.setItem("allMovies", JSON.stringify(movies));
+        localStorage.setItem(
+            LOCAL_STORAGE_KEYS.movieData,
+            JSON.stringify(movieDataList)
+        );
+        localStorage.setItem(
+            LOCAL_STORAGE_KEYS.allMovies,
+            JSON.stringify(movies)
+        );
     };
 
     const handleToggleShortMovies = () => {
         const newShortMoviesEnabled = !isShortMovieData;
         setIsShortMovieData(newShortMoviesEnabled);
-        localStorage.setItem("shortMoviesEnabled", newShortMoviesEnabled);
+        localStorage.setItem(
+            LOCAL_STORAGE_KEYS.shortMoviesEnabled,
+            newShortMoviesEnabled
+        );
 
         const filtered = newShortMoviesEnabled
             ? getShortFilmsFilter(initialMovieData)
@@ -56,8 +69,11 @@ function Movies({ savedMovies, onCardDelete, onCardLike }) {
 
     const onSearchMovies = (query) => {
         setIsLoadingMovies(true);
-        localStorage.setItem("movieSearchQuery", query);
-        localStorage.setItem("shortMoviesEnabled", isShortMovieData);
+        localStorage.setItem(LOCAL_STORAGE_KEYS.movieSearchQuery, query);
+        localStorage.setItem(
+            LOCAL_STORAGE_KEYS.shortMoviesEnabled,
+            isShortMovieData
+        );
 
         MoviesApi.getMovies()
             .then((movieData) => {

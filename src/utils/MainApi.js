@@ -1,3 +1,5 @@
+import { JWT, MAIN_API_URL, IMAGE_URL_PREFIX } from "./constants/constants";
+
 class mainApi {
     constructor({ url }) {
         this._url = url;
@@ -32,7 +34,7 @@ class mainApi {
     }
 
     getUserInfo() {
-        const token = localStorage.getItem("jwt");
+        const token = localStorage.getItem(JWT);
         return fetch(`${this._url}/users/me`, {
             headers: {
                 authorization: `Bearer ${token}`,
@@ -41,7 +43,7 @@ class mainApi {
     }
 
     updateUser(name, email) {
-        const token = localStorage.getItem("jwt");
+        const token = localStorage.getItem(JWT);
         return fetch(`${this._url}/users/me`, {
             method: "PATCH",
             headers: {
@@ -53,7 +55,7 @@ class mainApi {
     }
 
     getSavedMovies() {
-        const token = localStorage.getItem("jwt");
+        const token = localStorage.getItem(JWT);
         return fetch(`${this._url}/movies`, {
             headers: {
                 authorization: `Bearer ${token}`,
@@ -62,7 +64,7 @@ class mainApi {
     }
 
     addNewMovie(data) {
-        const token = localStorage.getItem("jwt");
+        const token = localStorage.getItem(JWT);
         return fetch(`${this._url}/movies`, {
             method: "POST",
             headers: {
@@ -75,11 +77,9 @@ class mainApi {
                 duration: data.duration,
                 year: data.year,
                 description: data.description,
-                image: "https://api.nomoreparties.co" + data.image.url,
+                image: `${IMAGE_URL_PREFIX}${data.image.url}`,
                 trailerLink: data.trailerLink,
-                thumbnail:
-                    "https://api.nomoreparties.co" +
-                    data.image.formats.thumbnail.url,
+                thumbnail: `${IMAGE_URL_PREFIX}${data.image.formats.thumbnail.url}`,
                 movieId: data.id,
                 nameRU: data.nameRU,
                 nameEN: data.nameEN,
@@ -88,7 +88,7 @@ class mainApi {
     }
 
     deleteMovie(data) {
-        const token = localStorage.getItem("jwt");
+        const token = localStorage.getItem(JWT);
         return fetch(`${this._url}/movies/${data}`, {
             method: "DELETE",
             headers: {
@@ -100,7 +100,7 @@ class mainApi {
 
 const MainApi = new mainApi({
     // url: "http://localhost:3000/",
-    url: "https://api.quest19-diplom.nomoredomainsicu.ru",
+    url: MAIN_API_URL,
 });
 
 export default MainApi;

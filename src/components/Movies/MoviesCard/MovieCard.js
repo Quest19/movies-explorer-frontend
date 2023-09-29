@@ -1,5 +1,6 @@
 import React from "react";
 import getTimeMovieFilter from "../../../utils/movieFilters/getTimeMovieFilter";
+import { IMAGE_URL_PREFIX } from "../../../utils/constants/constants";
 
 function MovieCard({
     card,
@@ -22,10 +23,6 @@ function MovieCard({
         onCardDelete(card);
     };
 
-    const cardSaveButtonClassName = `movieCard__btn ${
-        saved ? "movieCard__btn_type_like" : ""
-    }`;
-
     return (
         <div className="movieCard">
             <a
@@ -39,7 +36,7 @@ function MovieCard({
                     src={
                         isSavedMovies
                             ? card.image
-                            : `https://api.nomoreparties.co/${card.image.url}`
+                            : `${IMAGE_URL_PREFIX}${card.image.url}`
                     }
                     alt={card.nameRU}
                 />
@@ -61,7 +58,9 @@ function MovieCard({
                     ></button>
                 ) : (
                     <button
-                        className={cardSaveButtonClassName}
+                        className={`movieCard__btn ${
+                            saved ? "movieCard__btn_type_like" : ""
+                        }`}
                         type="button"
                         onClick={handleCardClick}
                     ></button>

@@ -2,7 +2,9 @@ import { useNavigate } from "react-router-dom";
 
 function NotFoundPage() {
     const navigate = useNavigate();
-    const handleGoBackClick = () => navigate(-1);
+    const handleGoBackClick = () => {
+        navigate(-1);
+    };
 
     return (
         <main>

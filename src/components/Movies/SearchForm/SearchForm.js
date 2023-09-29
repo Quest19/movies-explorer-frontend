@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import ToggleButton from "../ToggleButton/ToggleButton";
+import { LOCAL_STORAGE_KEYS } from "../../../utils/constants/constants";
 
 function SearchForm({ onSearchMovies, onToggleShortMovies, isShortMovies }) {
     const [searchRequest, setSearchRequest] = useState("");
@@ -8,7 +9,9 @@ function SearchForm({ onSearchMovies, onToggleShortMovies, isShortMovies }) {
     const location = useLocation();
 
     useEffect(() => {
-        const localQuery = localStorage.getItem("movieSearchQuery");
+        const localQuery = localStorage.getItem(
+            LOCAL_STORAGE_KEYS.movieSearchQuery
+        );
         if (location.pathname === "/movies" && localQuery) {
             setSearchRequest(localQuery);
         }

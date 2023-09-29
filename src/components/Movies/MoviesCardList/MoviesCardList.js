@@ -4,6 +4,13 @@ import MovieCard from "../MoviesCard/MovieCard";
 import Preloader from "../Preloader/Preloader";
 import SearchMessage from "../SearchMessage/SearchMessage";
 import MoreMovies from "../MoreMovies/MoreMovies";
+import {
+    SHOW_MORE_COUNTS,
+    MEDIA_WIDTHS,
+    ERROR_MESSAGES,
+    SHOWN_MOVIES_COUNT,
+    LOAD_MORE_WIDTHS,
+} from "../../../utils/constants/constants";
 
 function MoviesCardList({
     movieData,
@@ -19,22 +26,16 @@ function MoviesCardList({
     const totalMoviesCount = movieData.length;
     const { pathname } = useLocation();
 
-    const showMoreCounts = {
-        desktop: 4,
-        tablet: 3,
-        mobile: 2,
-    };
-
     const calculateShownMoviesCount = () => {
         const width = window.innerWidth;
-        if (width > 1156) {
-            setShownMoviesCount(16);
-        } else if (width > 866) {
-            setShownMoviesCount(12);
-        } else if (width > 724) {
-            setShownMoviesCount(8);
-        } else if (width > 400) {
-            setShownMoviesCount(5);
+        if (width > MEDIA_WIDTHS.desktop) {
+            setShownMoviesCount(SHOWN_MOVIES_COUNT.desktop);
+        } else if (width > MEDIA_WIDTHS.tablet) {
+            setShownMoviesCount(SHOWN_MOVIES_COUNT.tablet);
+        } else if (width > MEDIA_WIDTHS.mobile) {
+            setShownMoviesCount(SHOWN_MOVIES_COUNT.mobile);
+        } else if (width > MEDIA_WIDTHS.smallMobile) {
+            setShownMoviesCount(SHOWN_MOVIES_COUNT.smallMobile);
         }
     };
 
@@ -48,12 +49,12 @@ function MoviesCardList({
 
     const handleLoadMore = () => {
         const width = window.innerWidth;
-        if (width > 1180) {
-            setShownMoviesCount(shownMoviesCount + showMoreCounts.desktop);
-        } else if (width > 1023) {
-            setShownMoviesCount(shownMoviesCount + showMoreCounts.tablet);
-        } else if (width < 1023) {
-            setShownMoviesCount(shownMoviesCount + showMoreCounts.mobile);
+        if (width > LOAD_MORE_WIDTHS.desktop) {
+            setShownMoviesCount(shownMoviesCount + SHOW_MORE_COUNTS.desktop);
+        } else if (width > LOAD_MORE_WIDTHS.tablet) {
+            setShownMoviesCount(shownMoviesCount + SHOW_MORE_COUNTS.tablet);
+        } else if (width < LOAD_MORE_WIDTHS.tablet) {
+            setShownMoviesCount(shownMoviesCount + SHOW_MORE_COUNTS.mobile);
         }
     };
 
@@ -64,14 +65,10 @@ function MoviesCardList({
         <section className="movieCardList">
             {isLoading && <Preloader />}
             {!isLoading && isNoResults && (
-                <SearchMessage errorMessage={"Ничего не найдено!"} />
+                <SearchMessage errorMessage={ERROR_MESSAGES.noResults} />
             )}
             {!isLoading && isRequestError && (
-                <SearchMessage
-                    errorMessage={
-                        "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-                    }
-                />
+                <SearchMessage errorMessage={ERROR_MESSAGES.requestError} />
             )}
             {!isLoading && !isRequestError && !isNoResults && (
                 <>
